@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %} 
+{% block title %}Add New Employee Records{% endblock title %}
+ 
+{% block css_file %}
+
+<link rel="stylesheet" href="  {% static 'app.css' %}  ">
+{% endblock css_file %}
+
+{% block body %}
+
+{% include 'analyzer_app/includes/navbar.html' %}
+
+<div class = "space">
+    
+  </div>
+
+<div class="col-md-12">    
+    <form method="POST" class="post-form" action="">  
+    {% csrf_token %}  
+    <div class="container">  
+        <div class="col-12">  
+        <h3>Enter Details</h3>  
+        </div>    
+     
+        <div class="mb-3"> 
+            <label>date:</label>  
+            <input type="text" name="date">   
+        </div> 
+        <div class="mb-3"> 
+            <label>trade_code:</label>  
+            <input type="text" name= "trade_code">   
+        </div>  
+        <div class="mb-3"> 
+            <label>high:</label>  
+            <input type="text" name = "high">   
+        </div> 
+
+        <div class="mb-3"> 
+            <label>low:</label>  
+            <input type="text" name= "low">   
+        </div> 
+
+        <div class="mb-3"> 
+            <label>open:</label>  
+            <input type="text" name = "open">   
+        </div> 
+
+        <div class="mb-3"> 
+            <label>close:</label>  
+            <input type="text" name = "close">   
+        </div> 
+
+        <div class="mb-3"> 
+            <label>volume:</label>  
+            <input type="text" name = "volume">   
+        </div> 
+        <div class="mb-3"> 
+            <button type="submit" class="btn btn-primary">Submit</button>    
+        </div> 
+    </div>  
+    </form>  
+</div> 
+{% endblock body %} 

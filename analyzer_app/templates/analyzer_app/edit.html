@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load static %} 
+{% block title %}Add New Employee Records{% endblock title %}
+ 
+{% block css_file %}
+
+<link rel="stylesheet" href="  {% static 'app.css' %}  ">
+{% endblock css_file %}
+
+{% block body %}
+
+{% include 'analyzer_app/includes/navbar.html' %}
+
+<div class = "space">
+    
+  </div>
+
+  <div class="col-md-12">
+    <form method="POST" class="post-form" action="">  
+    {% csrf_token %}  
+    <div class="container">   
+        <div class="col-12">  
+            <h3>Update Details</h3>  
+        </div> 
+        <div class="mb-3"> 
+            <label>date:</label>  
+            <input type="text" name="date" value="{{ form.date }}">   
+        </div> 
+        <div class="mb-3"> 
+            <label>trade_code:</label>  
+            <input type="text" name= "trade_code" value="{{ form.trade_code }}">   
+        </div>  
+        <div class="mb-3"> 
+            <label>high:</label>  
+            <input type="text" name = "high" value="{{ form.high }}">   
+        </div> 
+
+        <div class="mb-3"> 
+            <label>low:</label>  
+            <input type="text" name= "low" value="{{ form.low }}">   
+        </div> 
+
+        <div class="mb-3"> 
+            <label>open:</label>  
+            <input type="text" name = "open" value="{{ form.open }}">   
+        </div> 
+
+        <div class="mb-3"> 
+            <label>close:</label>  
+            <input type="text" name = "close" value="{{ form.close }}">   
+        </div> 
+
+        <div class="mb-3"> 
+            <label>volume:</label>  
+            <input type="text" name = "volume" value="{{ form.volume }}">   
+        </div>
+        <input id="full_path" name="full_path" type="hidden" value="{{ request.path }}"> 
+        <div class="mb-3"> 
+            <button type="submit" class="btn btn-success btn-lg">Update</button>  
+        </div> 
+    </div>  
+    </form>  
+{% endblock body %} 

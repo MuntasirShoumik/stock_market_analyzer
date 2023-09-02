@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Home {% endblock title %}
+
+{% block css_file %}
+
+<link rel="stylesheet" href="  {% static 'app.css' %}  ">
+{% endblock css_file %}
+
+
+
+{% block body %} 
+
+
+
+
+{% include 'analyzer_app/includes/navbar.html' %}
+
+<div class = "space">
+    
+  </div>
+
+
+<div class="col-md-12">
+    <span><a href="{% url 'addnew' %}" class="btn btn-primary">Add New Record</a></span>  
+    <div class="table-responsive">
+    <table id="bootstrapdatatable" class="table table-striped table-bordered" width="100%">
+    <thead>
+        <th><input type="checkbox" id="checkall" /></th>
+        <th>date</th>
+        <th>trade_code</th>
+        <th>high</th>
+        <th>low</th>
+        <th>open</th>
+        <th>close</th>
+        <th>volume</th>
+    </thead>
+    <tbody>
+    {% for data in market_data %}  
+        <tr>  
+        <td><input type="checkbox" class="checkthis" /></td>
+        <td>{{ data.date }}</td>  
+        <td>{{ data.trade_code }}</td>  
+        <td>{{ data.high }}</td>  
+        <td>{{ data.low }}</td>
+        <td>{{ data.open }}</td>
+        <td>{{ data.close }}</td>
+        <td>{{ data.volume }}</td>  
+        <td><a href="/edit/{{ data.id }}" class="btn btn-primary">Edit</a></td>
+        <td><a href="/delete/{{ data.id }}" class="btn btn-danger">Delete</a></td>  
+        </tr>  
+    {% endfor %} 
+    </tbody>
+    </table>
+    </div>
+</div>
+
+
+
+
+
+
+
+<section class = "Home">
+   
+    
+
+    
+</section>
+
+
+
+{% endblock body %}

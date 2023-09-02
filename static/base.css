@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans&family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: 'Montserrat', sans-serif;;
+}
+a{
+    text-decoration: none;
+    font-family: 'Ubuntu', sans-serif;
+    color: rgb(123, 106, 218);
+    
+ }
