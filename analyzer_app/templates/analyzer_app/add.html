@@ -24,36 +24,43 @@
         </div>    
      
         <div class="mb-3"> 
-            <label>date:</label>  
-            <input type="text" name="date">   
+            <label>date:</label>
+            {{ form.date }}    
+            {% comment %} <input type="text" name="date">    {% endcomment %}
         </div> 
         <div class="mb-3"> 
-            <label>trade_code:</label>  
-            <input type="text" name= "trade_code">   
+            <label>trade_code:</label>
+            {{ form.trade_code }} 
+            {% comment %} <input type="text" name= "trade_code">    {% endcomment %}
         </div>  
         <div class="mb-3"> 
-            <label>high:</label>  
-            <input type="text" name = "high">   
+            <label>high:</label>
+            {{ form.high }}   
+            {% comment %} <input type="text" name = "high">    {% endcomment %}
         </div> 
 
         <div class="mb-3"> 
-            <label>low:</label>  
-            <input type="text" name= "low">   
+            <label>low:</label>
+            {{ form.low }}   
+            {% comment %} <input type="text" name= "low">    {% endcomment %}
         </div> 
 
         <div class="mb-3"> 
-            <label>open:</label>  
-            <input type="text" name = "open">   
+            <label>open:</label>
+            {{ form.open }}   
+            {% comment %} <input type="text" name = "open">    {% endcomment %}
         </div> 
 
         <div class="mb-3"> 
-            <label>close:</label>  
-            <input type="text" name = "close">   
+            <label>close:</label>
+            {{ form.close }}   
+            {% comment %} <input type="text" name = "close">    {% endcomment %}
         </div> 
 
         <div class="mb-3"> 
-            <label>volume:</label>  
-            <input type="text" name = "volume">   
+            <label>volume:</label>
+            {{ form.volume }}   
+            {% comment %} <input type="text" name = "volume">    {% endcomment %}
         </div> 
         <div class="mb-3"> 
             <button type="submit" class="btn btn-primary">Submit</button>    
