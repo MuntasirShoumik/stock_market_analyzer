@@ -28,7 +28,7 @@ SECRET_KEY = "django-insecure--6@9=42gh%8tsh2l^+!3g5t=4=-mle%f)2oc2m-b_u3^y*6vmv
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["https://stock-market-analyzer.onrender.com"]
 
 
 # Application definition
