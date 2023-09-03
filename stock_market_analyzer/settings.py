@@ -94,7 +94,7 @@ WSGI_APPLICATION = "stock_market_analyzer.wsgi.application"
 # }
 
 DATABASES = {
-    "default": dj_database_url.parse("postgres://stock_db_1j6y_user:J3smUpFyHTB76lti23gwRNjEINZsRyDm@dpg-cjqbrsthe99c73bdd06g-a.singapore-postgres.render.com/stock_db_1j6y")
+    "default": dj_database_url.parse(os.environ.get("DATABASE_URL"))
 }
 
 
