@@ -1,7 +1,64 @@
-.Home p{
-    margin-top: 100px;
-}
+
 
 .space{
     margin-top: 100px;
 }
+
+
+/* Login page */
+
+
+.login-form-container{
+
+    margin: 2% auto;
+    width: 50%;
+    box-shadow: -1px 1px 7px 0px #888888;
+    padding: 30px;
+    border-radius: 1%;
+}
+.login-form-container *{
+
+   
+    padding: 3px;
+    
+}
+
+
+/* Index page */
+
+.chart-container{
+
+    margin: 2% auto;
+    width: 85%;
+    
+    
+}
+
+.chart-control-container{
+    margin: 2% auto;
+    width: 75%;
+}
+
+/* .c-btn{
+    height: 50%;
+} */
+
+
+
+.chart-control-container th{
+    font-weight: normal;
+}
+.chart-control-container table{
+    width: 100%;
+}
+.chart-control-container table *{
+    padding: 5px;
+}
+
+
+
+.data-table-container{
+    margin: 2% auto;
+    width: 90%;
+}
+

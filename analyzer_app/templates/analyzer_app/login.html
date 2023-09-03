@@ -6,7 +6,6 @@
 
 {% block css_file %}
 <link rel="stylesheet" href="  {% static 'app.css' %}  ">
-
 {% endblock css_file %}
 
 {% block body %}
@@ -17,16 +16,18 @@
     
 
       <div class = "space">
-        <h4>Login</h4>
+        
       </div>
 
     <div class = "login-form-container">
+      <h4>Login</h4>
         <form action="" method="post" enctype = "multipart/form-data">
 
             {% csrf_token %}
             {{form | crispy}}
+            <p>{{error}}</p>
             <div style="display: flex   ;">
-            <button class="btn btn-outline-primary" type="submit" formnovalidate> Login </button>
+            <button class="btn btn-outline-primary" type="submit" > Login </button>
             <a style="margin-left: auto; margin-top = 10px;" href="{% url 'register' %}">Don't have an account?</a>
             </div>
         </form>

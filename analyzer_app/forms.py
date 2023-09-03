@@ -23,6 +23,8 @@ class StockDataForm(ModelForm):
             "close",
             "volume",
         ]
+    
 
+    date = forms.DateField(widget=forms.DateInput(attrs={'type': 'date'}))
 
 

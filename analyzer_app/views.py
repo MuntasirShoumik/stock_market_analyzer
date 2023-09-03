@@ -15,31 +15,41 @@ from django.contrib.auth.decorators import login_required
 import json
 from .models import StockData
 from django.forms.models import model_to_dict
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 
-""" 
-echo "# stock_market_analyzer" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git branch -M main
-git remote add origin https://github.com/MuntasirShoumik/stock_market_analyzer.git
-git push -u origin main
-
-
-
-git remote add origin https://github.com/MuntasirShoumik/stock_market_analyzer.git
-git branch -M main
-git push -u origin main
-
-
-"""
 
 @login_required(login_url='login/')
 def index(request):
-    market_data = StockData.objects.all()
-    return render(request,'analyzer_app/index.html',{"market_data":market_data})
+    market_data = StockData.objects.order_by('-date')
+    email = request.session['email']
+    records = len(market_data) if len(market_data) < 100 else 100
+
+
+
+    if request.method == "POST":
+        
+        records = records if request.POST['records'] == "" else int(request.POST['records'])
+        x_data = [item[0] for item in market_data.values_list(request.POST['X-axis'])[:records]] if request.POST['X-axis'] == 'date' else [float(item[0]) for item in market_data.values_list(request.POST['X-axis'])[:records]]
+        y_data = [item[0] for item in market_data.values_list(request.POST['Y-axis'])[:records]] if request.POST['Y-axis'] == 'date' else [float(item[0]) for item in market_data.values_list(request.POST['Y-axis'])[:records]]
+        cType = request.POST['chartType']
+        lable = f"{request.POST['X-axis']} vs {request.POST['Y-axis']} ({cType})"
+        
+    else:
+
+        x_data = [float(item[0]) for item in market_data.values_list('open')[:records]]
+        y_data = [float(item[0]) for item in market_data.values_list('close')[:records]]
+        cType = "line"
+        lable = "Open vs Close (line)"
+    return render(request,'analyzer_app/index.html',{"market_data":market_data,
+                                                     "x_data":x_data,
+                                                     "y_data":y_data,
+                                                     "cType":cType,
+                                                     "lable":lable,
+                                                     "email":email,
+                                                     "records":records
+                                                     })
 
     # with open('D:/python/django/full_stack_test/stock_market_analyzer/analyzer_app/stock_market_data.json') as json_file:
     #     market_data = json.load(json_file)
@@ -69,6 +79,8 @@ def register(request):
   
 
 def Login(request):
+
+    error = ""
     if request.method == 'POST':
   
        
@@ -79,18 +91,21 @@ def Login(request):
         if user is not None:
             form = login(request, user)
             
-            
-            return render(request, 'analyzer_app/index.html', {'email':request.user.email})
-        
+            request.session['email'] = email
+            return redirect("index")
+        else:
+            error = "Wrong email or Password !!"
     form = AuthenticationForm()
-    return render(request, 'analyzer_app/login.html', {'form':form})
+    return render(request, 'analyzer_app/login.html', {'form':form,
+                                                       "error":error
+                                                       })
 
 
 
 @login_required(login_url='login/')
 def custom_logout(request):
     logout(request)
-    
+    request.session['email'] = None
     return redirect("login")
 
 
