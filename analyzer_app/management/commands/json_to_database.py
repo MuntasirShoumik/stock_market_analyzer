@@ -8,7 +8,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         with open('D:/python/django/full_stack_test/stock_market_analyzer/analyzer_app/stock_market_data.json', 'r') as file:
-            data = json.load(file)[1000:5000]
+            data = json.load(file)[:4000]
             for item in data:
                 stockData = StockData(
                     date=datetime.strptime(item['date'], '%Y-%m-%d').date(),

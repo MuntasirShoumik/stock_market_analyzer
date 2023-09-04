@@ -36,6 +36,11 @@ def index(request):
     close = [float(item[0]) for item in market_data.values_list("close")]
     volume =  [float(item[0]) for item in market_data.values_list("volume")]
 
+    
+    # paginator = Paginator(market_data, per_page=10) 
+    # page_number = request.GET.get('page')  
+    # page = paginator.get_page(page_number)
+
    
 
     return render(request,'analyzer_app/index.html',{"market_data":market_data,                                            
@@ -47,7 +52,8 @@ def index(request):
                                                     "low":low,
                                                     "open":open,
                                                     "close":close,
-                                                    "volume":volume
+                                                    "volume":volume,
+                                                    # 'page': page,
                                                      }) # sending context to index page
     
 
