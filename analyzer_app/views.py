@@ -25,31 +25,29 @@ def index(request):
     market_data = StockData.objects.order_by('-date') # getting data sorted newest date first 
     email = request.session['email'] # getting the email of logged in user from session
     records = len(market_data) if len(market_data) < 100 else 100  # setting a default value of 100 if database has more then 100 records else total num of records
+    
+    # """separating and converting all the column data from market_data in iterables
+    #    for the purpose of using in the frontend data visualization"""
+    date = [item[0] for item in market_data.values_list("date")]
+    trade_code = [item[0] for item in market_data.values_list("trade_code")]
+    high = [float(item[0]) for item in market_data.values_list("high")]
+    low = [float(item[0]) for item in market_data.values_list("low")]
+    open = [float(item[0]) for item in market_data.values_list("open")]
+    close = [float(item[0]) for item in market_data.values_list("close")]
+    volume =  [float(item[0]) for item in market_data.values_list("volume")]
 
+   
 
-          #""" If it is a POST request"""#
-    if request.method == "POST":
-        
-        records = records if request.POST['records'] == "" else int(request.POST['records']) # records = peviously set value if records input is not given by the user 
-        x_data = [item[0] for item in market_data.values_list(request.POST['X-axis'])[:records]] if request.POST['X-axis'] == 'date' else [float(item[0]) for item in market_data.values_list(request.POST['X-axis'])[:records]] # getting user selected x-axis data in a iterable. if tha selected column is not date then the column is converted in to float
-        y_data = [item[0] for item in market_data.values_list(request.POST['Y-axis'])[:records]] if request.POST['Y-axis'] == 'date' else [float(item[0]) for item in market_data.values_list(request.POST['Y-axis'])[:records]] # doing the same for selected y-axis
-        cType = request.POST['chartType'] # getting the type of chart user want to see
-        lable = f"{request.POST['X-axis']} vs {request.POST['Y-axis']} ({cType})" # setting a lable for the chart
-        
-        #""" If it is a GET request"""#
-    else:
-
-        x_data = [float(item[0]) for item in market_data.values_list('open')[:records]] # setting x-axis as open column
-        y_data = [float(item[0]) for item in market_data.values_list('close')[:records]] # setting y-axis as close column
-        cType = "line" # default chart type is line chart
-        lable = "Open vs Close (line)"
-    return render(request,'analyzer_app/index.html',{"market_data":market_data,
-                                                     "x_data":x_data,
-                                                     "y_data":y_data,
-                                                     "cType":cType,
-                                                     "lable":lable,
-                                                     "email":email,
-                                                     "records":records
+    return render(request,'analyzer_app/index.html',{"market_data":market_data,                                            
+                                                    "records":records,
+                                                    "email":email,
+                                                    "date":date,
+                                                    "trade_code":trade_code,
+                                                    "high":high,
+                                                    "low":low,
+                                                    "open":open,
+                                                    "close":close,
+                                                    "volume":volume
                                                      }) # sending context to index page
     
 

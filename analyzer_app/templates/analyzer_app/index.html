@@ -29,33 +29,12 @@
 
 <div class= "d-flex justify-content-center">
 
-   <p>Showing last {{records}} records</p>
+   <p>Showing last <span id= "numrecords"></span> records</p>
 
 </div>
 
    
-   <script>
-      var chrt = document.getElementById("chartId").getContext("2d");
-      
-      var chartId = new Chart(chrt, {
-         type: '{{cType}}',
-         data: {
-            labels: [{%for data in x_data%}'{{data}}',{%endfor%}],
-            datasets: [{
-               label: "{{lable}}",
-               data: [{%for data in y_data%}'{{data}}',{%endfor%}],
-               backgroundColor: ['yellow', 'aqua', 'pink', 'lightgreen', 'lightblue', 'gold'],
-               borderColor: ['black'],
-               borderWidth: 2,
-               pointRadius: 5,
-            }],
-         },
-         options: {
-            responsive: false,
-         },
-      });
-   </script>
-
+  
 
 
 
@@ -66,8 +45,7 @@
 
 <div class="chart-control-container">
 
-   <form action=""  method="POST" >
-      {% csrf_token %}
+   
       <table>
       <thead>
           
@@ -126,7 +104,7 @@
 
         <td>
          <div class="d-flex justify-content-center">
-            <button type="submit" class="btn btn-primary btn-sm btn-block ">Show</button>  
+            <button type="submit" id="show" class="btn btn-primary btn-sm btn-block ">Show</button>  
          </div>
       </td>  
         </tr>   
@@ -137,8 +115,105 @@
    
       </table>
    
-   </form>   
+  
 </div>
+
+
+<script src="{% static 'app.js' %}"></script>
+
+<script>
+   // getting all the column data from the backend
+   const data = {
+      date: [{% for data in date %}'{{ data }}', {% endfor %}],
+      trade_code: [{% for data in trade_code %}'{{ data }}', {% endfor %}],
+      high: [{% for data in high %}'{{ data }}', {% endfor %}],
+      low: [{% for data in low %}'{{ data }}', {% endfor %}],
+      open: [{% for data in open %}'{{ data }}', {% endfor %}],
+      volume: [{% for data in volume %}'{{ data }}', {% endfor %}],
+      close: [{% for data in close %}'{{ data }}', {% endfor %}],
+   };
+
+   // Default chart settings
+   const defaultChartConfig = {
+      type: 'line',
+      data: {
+         labels: data.open.slice(0, {{records}}),
+         datasets: [{
+            label: "Open vs Close (line chart)",
+            data: data.close.slice(0, {{records}}),
+            backgroundColor: ['yellow', 'aqua', 'pink', 'lightgreen', 'lightblue', 'gold'],
+            borderColor: ['black'],
+            borderWidth: 2,
+            pointRadius: 5,
+         }],
+      },
+      options: {
+         responsive: true,
+      },
+   };
+
+   // Function to create and render a chart
+   function createChart(chartType, xAxis, yAxis, numRecords) {
+      // setting number of record to show if user did not give any input
+      if(isNaN(numRecords)){
+         numRecords = {{records}};
+      }
+      const numRecordsSpan = document.getElementById("numrecords");
+      numRecordsSpan.textContent = numRecords;
+      // Creating a new chart
+      return new Chart(chrt, {
+         type: chartType,
+         data: {
+            labels: data[xAxis].slice(0, numRecords),
+            datasets: [{
+               label: xAxis+" vs "+ yAxis+" ("+chartType+")",
+               data: data[yAxis].slice(0, numRecords),
+               backgroundColor: ['yellow', 'aqua', 'pink', 'lightgreen', 'lightblue', 'gold'],
+               borderColor: ['black'],
+               borderWidth: 2,
+               pointRadius: 5,
+            }],
+         },
+         options: {
+            responsive: true,
+         },
+      });
+   }
+
+   // Getting references of html elements
+   const chartTypeSelect = document.getElementById("chartType");
+   const xAxisSelect = document.getElementById("X-axis");
+   const yAxisSelect = document.getElementById("Y-axis");
+   const recordsInput = document.querySelector("input[name='records']");
+   const showButton = document.getElementById("show");
+
+   // Getting the canvas context
+   const chrt = document.getElementById("chartId").getContext("2d");
+   
+   // Initializing the default chart
+   let chartInstance = createChart(defaultChartConfig.type, 'open', 'close', 100);
+   
+
+   // Event listener for the "Show" button
+   showButton.addEventListener("click", function (event) {
+      event.preventDefault();
+
+      const selectedChartType = chartTypeSelect.value;
+      const selectedXAxis = xAxisSelect.value;
+      const selectedYAxis = yAxisSelect.value;
+      const selectedRecords = parseInt(recordsInput.value);
+      
+      // It Destroy the previous chart instance
+      if (chartInstance) {
+         chartInstance.destroy();
+      }
+      
+      // Create and render a new chart if show button is clicked
+      chartInstance = createChart(selectedChartType, selectedXAxis, selectedYAxis, selectedRecords);
+   });
+</script>
+
+
 
 
 <hr>
